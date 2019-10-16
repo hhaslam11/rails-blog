@@ -11,6 +11,10 @@ class ArticlesController < ApplicationController
   def new
   end
 
+  def edit
+    @article = Article.find(params[:id])
+  end
+
   def create
     # we need to explicitly permit certain values to be sent to the model
     # as a security measure
@@ -20,6 +24,16 @@ class ArticlesController < ApplicationController
       redirect_to @article
     else
       render 'new'
+    end
+  end
+
+  def update
+    @article = Article.find(params[:id])
+
+    if @article.update(article_params)
+      redirect_to @article
+    else
+      render 'edit'
     end
   end
 
