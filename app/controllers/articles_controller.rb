@@ -1,5 +1,28 @@
 class ArticlesController < ApplicationController
-  def new
-    
+  
+  def index
+    @articles = Article.all
   end
+
+  def show
+    @article = Article.find(params[:id])
+  end
+
+  def new
+  end
+
+  def create
+    # we need to explicitly permit certain values to be sent to the model
+    # as a security measure
+    @article = Article.new(article_params)
+
+    @article.save
+    redirect_to @article
+  end
+
+  private
+  def article_params
+    params.require(:article).permit(:title, :text)
+  end
+
 end
